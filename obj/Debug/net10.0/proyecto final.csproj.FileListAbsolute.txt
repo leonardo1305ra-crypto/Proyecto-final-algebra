@@ -1,0 +1,15 @@
+C:\Users\Leonardo\source\repos\proyecto final\bin\Debug\net10.0\proyecto final.exe
+C:\Users\Leonardo\source\repos\proyecto final\bin\Debug\net10.0\proyecto final.deps.json
+C:\Users\Leonardo\source\repos\proyecto final\bin\Debug\net10.0\proyecto final.runtimeconfig.json
+C:\Users\Leonardo\source\repos\proyecto final\bin\Debug\net10.0\proyecto final.dll
+C:\Users\Leonardo\source\repos\proyecto final\bin\Debug\net10.0\proyecto final.pdb
+C:\Users\Leonardo\source\repos\proyecto final\obj\Debug\net10.0\proyecto final.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Leonardo\source\repos\proyecto final\obj\Debug\net10.0\proyecto final.AssemblyInfoInputs.cache
+C:\Users\Leonardo\source\repos\proyecto final\obj\Debug\net10.0\proyecto final.AssemblyInfo.cs
+C:\Users\Leonardo\source\repos\proyecto final\obj\Debug\net10.0\proyecto final.csproj.CoreCompileInputs.cache
+C:\Users\Leonardo\source\repos\proyecto final\obj\Debug\net10.0\proyecto final.sourcelink.json
+C:\Users\Leonardo\source\repos\proyecto final\obj\Debug\net10.0\proyecto final.dll
+C:\Users\Leonardo\source\repos\proyecto final\obj\Debug\net10.0\refint\proyecto final.dll
+C:\Users\Leonardo\source\repos\proyecto final\obj\Debug\net10.0\proyecto final.pdb
+C:\Users\Leonardo\source\repos\proyecto final\obj\Debug\net10.0\proyecto final.genruntimeconfig.cache
+C:\Users\Leonardo\source\repos\proyecto final\obj\Debug\net10.0\ref\proyecto final.dll
