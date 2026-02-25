@@ -149,11 +149,93 @@ class Program
     protected static void MatrizLaplace()
     {
         Console.WriteLine("Matriz Laplace");
+        {
+            
+        }
     }
     protected static void MatrizCramer()
     {
         Console.WriteLine("Matriz Cramer");
-    }
+        Console.Write("Tamaño de la matriz (3x3 o 4x4)");
+        
+            int n =
+            int.Parse(Console.ReadLine());
+
+            double[,] matrizCoeficientes = new double[n, n];
+            double[] terminosIndependientes = new double[n];
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write($"Ingrese el número de la fila {i + 1}, columna {j + 1}: ");
+
+                    matrizCoeficientes[i, j] = double.Parse(Console.ReadLine());
+                }
+                Console.Write($"Ingrese el resultado de la ecuacion {i + 1}:");
+                terminosIndependientes[i] = double.Parse(Console.ReadLine());
+            }
+            double detBase = (n == 3) ?
+            Calculadora3x3(matrizCoeficientes) :
+            Calculadora4x4(matrizCoeficientes);
+
+            Console.WriteLine($"\n proceso ");
+            Console.WriteLine("Determinante del sistema: ");
+
+            if (detBase == 0)
+            {
+                Console.WriteLine("Determinante es igual a 0,No se tiene una solucion unica");
+                return;
+            }
+                    for ( int i = 0; i < n; ++i )
+                    {
+                        double[,]
+                            matrizAuxiliar = (double[,])matrizCoeficientes.Clone();
+                        for ( int j = 0;j < n; ++j )
+                        {
+                            matrizAuxiliar[j, i] = terminosIndependientes[j];
+                        }
+            double
+                detAuxiliar = (n == 3) ?
+                Calculadora3x3(matrizAuxiliar) :
+                Calculadora4x4(matrizAuxiliar);
+                        double resultadoFinal = detAuxiliar / detBase;
+
+                        Console.WriteLine($"Incognita {i + 1}: {detAuxiliar} / {detBase} = {resultadoFinal}");
+                    }
+                }
+                static double
+                    Calculadora3x3(double[,]m)
+                {
+                    double pos = (m[0, 0] * m[1, 1] * m[2, 2]) + (m[0, 1] * m[1, 2] * m[2, 0]) + (m[0, 2] * m[1, 0] * m[2, 1]);
+                    double neg = (m[0, 2] * m[1, 1] * m[2, 0]) + (m[0, 0] * m[1, 2] * m[2, 1]) + (m[0, 1] * m[1, 0] * m[2, 2]);
+                    return pos - neg;
+                }
+                static double
+                    Calculadora4x4(double[,]m)
+                {
+                    double total = 0;
+                    for (int i = 0; i < 4; i++)
+                    {
+                        double[,] sub = new double[3, 3];
+                        for (int fila = 1; fila < 4; fila++)
+                        {
+                            int colSub = 0;
+                            for (int col = 0; col < 4; col++)
+                            {
+                                if (col == i) continue;
+                                sub[fila - 1, colSub] = m[fila, col];
+                                colSub++;
+                            }
+                        }
+                        double signo = (i % 2 == 0) ? 1 : -1;
+                        total += signo * m[0, i] * Calculadora3x3(sub);
+                    }
+                    return total;
+                }
+            
+        
+    
     protected static void MatrizGauss()
     {
         Console.WriteLine("Matriz Gauss");
