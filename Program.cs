@@ -54,25 +54,49 @@ namespace Menu
             }
         }
 
+        // ==========================================
+        // FUNCIONES PARA VALIDAR QUE NO SE CIERRE EL PROGRAMA
+        // ==========================================
+        static int LeerEnteroSeguro()
+        {
+            int numero;
+            // Mientras no se pueda convertir a entero, muestra el error
+            while (!int.TryParse(Console.ReadLine(), out numero))
+            {
+                Console.WriteLine("carácter invalido");
+                Console.Write("Intente de nuevo: ");
+            }
+            return numero;
+        }
+
+        static double LeerDoubleSeguro()
+        {
+            double numero;
+            // Mientras no se pueda convertir a double, muestra el error
+            while (!double.TryParse(Console.ReadLine(), out numero))
+            {
+                Console.WriteLine("carácter invalido");
+                Console.Write("Intente de nuevo: ");
+            }
+            return numero;
+        }
+
         static void MultiplicarMatrices()
         {
             Console.WriteLine("Multiplicar Matrices");
 
-            // Dimensiones de la primera matriz
             Console.WriteLine("Filas de la primera matriz:");
-            int filasA = Convert.ToInt32(Console.ReadLine());
+            int filasA = LeerEnteroSeguro();
 
             Console.WriteLine("Columnas de la primera matriz:");
-            int columnasA = Convert.ToInt32(Console.ReadLine());
+            int columnasA = LeerEnteroSeguro();
 
-            // Dimensiones de la segunda matriz
             Console.WriteLine("Filas de la segunda matriz:");
-            int filasB = Convert.ToInt32(Console.ReadLine());
+            int filasB = LeerEnteroSeguro();
 
             Console.WriteLine("Columnas de la segunda matriz:");
-            int columnasB = Convert.ToInt32(Console.ReadLine());
+            int columnasB = LeerEnteroSeguro();
 
-            // Aquí se verifica si se puede multiplicar y las llaves correctas
             if (columnasA != filasB)
             {
                 Console.WriteLine("No se puede multiplicar.");
@@ -84,29 +108,26 @@ namespace Menu
             int[,] B = new int[filasB, columnasB];
             int[,] resultado = new int[filasA, columnasB];
 
-            // Aqui se llena la primera matriz
             Console.WriteLine("Valores de la matriz A");
             for (int i = 0; i < filasA; i++)
             {
                 for (int j = 0; j < columnasA; j++)
                 {
                     Console.Write($"A[{i + 1},{j + 1}]: ");
-                    A[i, j] = int.Parse(Console.ReadLine());
+                    A[i, j] = LeerEnteroSeguro();
                 }
             }
 
-            // Aqui se llena la segunda matriz
             Console.WriteLine("Valores de la matriz B");
             for (int i = 0; i < filasB; i++)
             {
                 for (int j = 0; j < columnasB; j++)
                 {
                     Console.Write($"B[{i + 1},{j + 1}]: ");
-                    B[i, j] = int.Parse(Console.ReadLine());
+                    B[i, j] = LeerEnteroSeguro();
                 }
             }
 
-            // Aqui hace el proceso de multiplicacion
             for (int i = 0; i < filasA; i++)
             {
                 for (int j = 0; j < columnasB; j++)
@@ -124,7 +145,6 @@ namespace Menu
                 }
             }
 
-            // Se muestra el resultado
             Console.WriteLine("\nMatriz resultado:\n");
             for (int i = 0; i < filasA; i++)
             {
@@ -141,17 +161,16 @@ namespace Menu
             int[,] matriz = new int[3, 3];
             Console.WriteLine("Matriz sarrus 3x3");
             Console.WriteLine("Ingrese los valores de la matriz:");
-            //pedir datos
+
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
                     Console.Write($"Elemento [{i + 1},{j + 1}]: ");
-                    matriz[i, j] = int.Parse(Console.ReadLine());
+                    matriz[i, j] = LeerEnteroSeguro();
                 }
             }
 
-            // muestra la matriz en forma de grafica
             Console.WriteLine("\nMatriz ingresada:\n");
             for (int i = 0; i < 3; i++)
             {
@@ -163,7 +182,6 @@ namespace Menu
                 Console.WriteLine("/");
             }
 
-            //poner los valores
             int a = matriz[0, 0];
             int b = matriz[0, 1];
             int c = matriz[0, 2];
@@ -174,17 +192,14 @@ namespace Menu
             int h = matriz[2, 1];
             int i2 = matriz[2, 2];
 
-            // Diagonal positiva
             int diagPos = (a * e * i2) + (d * h * c) + (g * b * f);
-            // Diagonal negativa
             int diagNeg = (c * e * g) + (f * h * a) + (i2 * b * d);
 
             int determinante = diagPos - diagNeg;
 
-            // Aqui se muestra el procedimiento
             Console.WriteLine("\nProceso");
-            Console.WriteLine($"Diagonal positiva: ({a}*{e}*{i2})+({d}*{h}*{c}+({g}*{b}*{f})= {diagPos}");
-            Console.WriteLine($"Diagonal negativa: ({c}*{e}*{g}+({f}*{h}*{a})+({i2}*{b}*{d}) = {diagNeg}");
+            Console.WriteLine($"Diagonal positiva: ({a}*{e}*{i2})+({d}*{h}*{c})+({g}*{b}*{f})= {diagPos}");
+            Console.WriteLine($"Diagonal negativa: ({c}*{e}*{g})+({f}*{h}*{a})+({i2}*{b}*{d}) = {diagNeg}");
 
             Console.WriteLine($"\nDeterminante = {diagPos} - {diagNeg} = {determinante}");
         }
@@ -203,7 +218,7 @@ namespace Menu
                 for (int j = 0; j < n; j++)
                 {
                     Console.Write($"Elemento [{i + 1},{j + 1}]: ");
-                    matriz[i, j] = Convert.ToDouble(Console.ReadLine());
+                    matriz[i, j] = LeerDoubleSeguro();
                 }
             }
 
@@ -214,13 +229,14 @@ namespace Menu
                 double[,] sub = SubMatriz(matriz, n, 0, p);
                 MostrarCuadrada(sub, n - 1);
                 double detSub = Determinante(sub, n - 1);
-                double cofactor = Math.Pow(-1, p) * matriz[0, p];
+                // REEMPLAZO DE Math.Pow PARA CUMPLIR LA REGLA
+                double signo = (p % 2 == 0) ? 1 : -1;
+                double cofactor = signo * matriz[0, p];
                 determinante += cofactor * detSub;
             }
 
             Console.WriteLine($"\nDeterminante = {determinante}");
 
-            // Funciones locales
             static double[,] SubMatriz(double[,] matriz, int n, int filaExcluir, int colExcluir)
             {
                 double[,] sub = new double[n - 1, n - 1];
@@ -250,7 +266,6 @@ namespace Menu
                 {
                     for (int j = 0; j < n; j++)
                     {
-                        //Console.Write(matriz[i, j] + "\t");
                     }
                 }
             }
@@ -265,7 +280,9 @@ namespace Menu
                 for (int p = 0; p < n; p++)
                 {
                     double[,] sub = SubMatriz(matriz, n, 0, p);
-                    det += matriz[0, p] * Math.Pow(-1, p) * Determinante(sub, n - 1);
+                    // REEMPLAZO DE Math.Pow PARA CUMPLIR LA REGLA
+                    double signo = (p % 2 == 0) ? 1 : -1;
+                    det += matriz[0, p] * signo * Determinante(sub, n - 1);
                 }
                 return det;
             }
@@ -276,7 +293,7 @@ namespace Menu
             Console.WriteLine("Matriz Cramer");
             Console.Write("Tamaño de la matriz (3 o 4 para 3x3 o 4x4): ");
 
-            int n = int.Parse(Console.ReadLine());
+            int n = LeerEnteroSeguro();
 
             double[,] matrizCoeficientes = new double[n, n];
             double[] terminosIndependientes = new double[n];
@@ -286,10 +303,10 @@ namespace Menu
                 for (int j = 0; j < n; j++)
                 {
                     Console.Write($"Ingrese el número de la fila {i + 1}, columna {j + 1}: ");
-                    matrizCoeficientes[i, j] = double.Parse(Console.ReadLine());
+                    matrizCoeficientes[i, j] = LeerDoubleSeguro();
                 }
                 Console.Write($"Ingrese el resultado de la ecuacion {i + 1}: ");
-                terminosIndependientes[i] = double.Parse(Console.ReadLine());
+                terminosIndependientes[i] = LeerDoubleSeguro();
             }
 
             double detBase = (n == 3) ? Calculadora3x3(matrizCoeficientes) : Calculadora4x4(matrizCoeficientes);
@@ -317,7 +334,6 @@ namespace Menu
                 Console.WriteLine($"Incognita {i + 1}: {detAuxiliar} / {detBase} = {resultadoFinal}");
             }
 
-            // Funciones locales
             static double Calculadora3x3(double[,] m)
             {
                 double pos = (m[0, 0] * m[1, 1] * m[2, 2]) + (m[0, 1] * m[1, 2] * m[2, 0]) + (m[0, 2] * m[1, 0] * m[2, 1]);
@@ -361,7 +377,7 @@ namespace Menu
                 for (int j = 0; j <= n; j++)
                 {
                     Console.Write($"Elemento [{i + 1},{j + 1}]: ");
-                    A[i, j] = Convert.ToDouble(Console.ReadLine());
+                    A[i, j] = LeerDoubleSeguro();
                 }
             }
 
@@ -399,7 +415,8 @@ namespace Menu
             Console.WriteLine("\nSolución:");
             for (int i = 0; i < n; i++)
             {
-                Console.WriteLine($"x{i + 1} = {Math.Round(x[i], 4)}");
+                // REEMPLAZO DE Math.Round PARA CUMPLIR LA REGLA
+                Console.WriteLine($"x{i + 1} = {x[i].ToString("0.####")}");
             }
         }
     }
